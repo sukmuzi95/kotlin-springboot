@@ -1,6 +1,10 @@
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=testdb
+    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=testdb;encrypt=true;trustServerCertificate=true
     username: rms
     password: rms
+
+  jpa:
+    show-sql: true
+
