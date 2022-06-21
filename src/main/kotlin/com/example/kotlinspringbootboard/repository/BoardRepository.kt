@@ -11,12 +11,21 @@ import org.springframework.transaction.annotation.Transactional
 interface BoardRepository : JpaRepository<Board, Long> {
 
     companion object{
-        const val UPDATE_BOARD: String = "UPDATE BOARD " +
-                "SET TILE = :#{#boardRequestDto.title}, " +
+        const val UPDATE_BOARD: String = "UPDATE TB_BOARD " +
+                "SET TITLE = :#{#boardRequestDto.title}, " +
                 "CONTENT = :#{#boardRequestDto.content}, " +
-                "UPDATE_TIME = NOW() " +
+                "UPDATE_TIME = GETDATE() " +
                 "WHERE ID = :#{#boardRequestDto.id}"
+
+        const val UPDATE_READCOUNT: String = "UPDATE TB_BOARD " +
+                "SET READ_CNT = READ_CNT + 1 " +
+                "WHERE ID = :#{#id}"
     }
+
+    @Transactional
+    @Modifying
+    @Query(value = UPDATE_READCOUNT, nativeQuery = true)
+    fun updateReadCount(id: Long)
 
     @Transactional
     @Modifying

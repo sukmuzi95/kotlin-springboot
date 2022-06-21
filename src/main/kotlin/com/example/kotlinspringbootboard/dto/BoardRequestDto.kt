@@ -7,10 +7,12 @@ data class BoardRequestDto(
     var title: String? = null,
     var content: String? = null,
     var registerId: String? = null
-) {
-    fun toEntity(): Board {
-        return Board().apply {
-            this.title = title
-        }
+)
+
+fun BoardRequestDto.toEntity(boardRequestDto: BoardRequestDto): Board {
+    return Board().apply {
+        this.title = boardRequestDto.title
+        this.content = boardRequestDto.content
+        this.registerId = boardRequestDto.registerId
     }
 }

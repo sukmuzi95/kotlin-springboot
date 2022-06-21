@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.kotlinspringbootboard.mapper.UserMapper">
+    <!-- 로그인 -->
+    <select id="getUserAccount" resultType="com.example.kotlinspringbootboard.entity.User">
+        SELECT * FROM TB_USER
+        WHERE USER_ID= #{userId}
+    </select>
+
+    <!-- 회원가입 -->
+    <insert id="saveUser" parameterType="com.example.kotlinspringbootboard.entity.User">
+        INSERT INTO TB_USER
+            (USER_ID, USER_PW, USER_NAME, USER_AUTH, APPEND_DATE, UPDATE_DATE)
+        VALUES(#{userId},#{userPw},#{userName},#{userAuth},#{appendDate},#{updateDate});
+    </insert>
+</mapper>

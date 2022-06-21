@@ -8,3 +8,18 @@ spring:
   jpa:
     show-sql: true
 
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+
+#  main:
+#    allow-circular-references: true
+
+mybatis:
+  mapper-locations: resources/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#logging:
+#  level:
+#    root: debug

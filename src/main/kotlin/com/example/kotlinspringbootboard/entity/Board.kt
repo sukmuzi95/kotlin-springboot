@@ -4,8 +4,10 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
+@Table(name = "TB_BOARD")
 data class Board(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,9 +15,7 @@ data class Board(
 
     var title: String? = null,
     var content: String? = null,
-    var readCnt: Int? = null,
+    var readCnt: Int? = 0,
     var registerId: String? = null
 
-) : BaseTimeEntity() {
-
-}
+) : BaseTimeEntity()
