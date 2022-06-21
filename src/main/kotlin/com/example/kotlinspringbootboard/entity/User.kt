@@ -4,15 +4,14 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.Collections
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "TB_USER")
 data class User (
     @Id
-    var userNo: Long? = null,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var userNo: Long? = 0,
 
     var userId: String? = null,
     var userPw: String? = null,
@@ -24,12 +23,12 @@ data class User (
         return Collections.singletonList(SimpleGrantedAuthority(this.userAuth))
     }
 
-    override fun getPassword(): String {
+    override fun getPassword(): String? {
         return this.password
     }
 
-    override fun getUsername(): String {
-        return this.username
+    override fun getUsername(): String? {
+        return userId
     }
 
     override fun isAccountNonExpired(): Boolean {

@@ -1,32 +1,43 @@
 package com.example.kotlinspringbootboard.service
 
 import com.example.kotlinspringbootboard.config.SecurityConfig
+import com.example.kotlinspringbootboard.dto.UserDto
 import com.example.kotlinspringbootboard.entity.User
 import com.example.kotlinspringbootboard.mapper.UserMapper
+import com.example.kotlinspringbootboard.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Component("userService")
+@Service
 class UserService(
     @Autowired private val userMapper: UserMapper,
-    @Autowired private val securityConfig: SecurityConfig
+    @Autowired private val userRepository: UserRepository
 ) : UserDetailsService {
 
     @Transactional
-    fun joinUser(user: User) {
-        user.userAuth = "USER"
-        user.userPw = securityConfig.passwordEncoder().encode(user.password)
-
-        userMapper.saveUser(user)
+    override fun loadUserByUsername(userId: String): User? {
+        return userRepository.findByUserId(userId)
+            .orElseThrow {
+                Throwable()
+                UsernameNotFoundException("$userId")
+            }
     }
 
-    @Transactional
-    override fun loadUserByUsername(username: String): UserDetails? {
-        return userMapper.getUserAccount(username)
+    fun save(userDto: UserDto): Long? {
+        var encoder = BCryptPasswordEncoder()
+        userDto.userPw = encoder.encode(userDto.userPw)
+
+        return userRepository.save(User().apply {
+            this.userId = userDto.userId
+            this.userPw = userDto.userPw
+            this.userName = userDto.userName
+            this.userAuth = "USER"
+        }).userNo
     }
 }

@@ -6,13 +6,19 @@
     <!-- 로그인 -->
     <select id="getUserAccount" resultType="com.example.kotlinspringbootboard.entity.User">
         SELECT * FROM TB_USER
-        WHERE USER_ID= #{userId}
+        WHERE USER_ID = #{userId}
     </select>
 
     <!-- 회원가입 -->
     <insert id="saveUser" parameterType="com.example.kotlinspringbootboard.entity.User">
         INSERT INTO TB_USER
-            (USER_ID, USER_PW, USER_NAME, USER_AUTH, APPEND_DATE, UPDATE_DATE)
-        VALUES(#{userId},#{userPw},#{userName},#{userAuth},#{appendDate},#{updateDate});
+            (USER_ID, USER_PW, USER_NAME, USER_AUTH, REGISTER_TIME, UPDATE_TIME)
+        VALUES
+            (#{userId},#{userPw},#{userName},#{userAuth},#{registerTime},#{updateTime})
     </insert>
+
+    <select id="checkUser" parameterType="String" resultType="Int">
+        SELECT COUNT(*) FROM TB_USER
+        WHERE USER_ID = #{userId}
+    </select>
 </mapper>

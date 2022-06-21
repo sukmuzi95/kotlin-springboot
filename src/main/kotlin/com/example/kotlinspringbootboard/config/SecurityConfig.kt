@@ -1,9 +1,12 @@
 package com.example.kotlinspringbootboard.config
 
+import com.example.kotlinspringbootboard.handler.AuthFailureHandler
+import com.example.kotlinspringbootboard.handler.AuthSuccessHandler
 import com.example.kotlinspringbootboard.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -11,39 +14,53 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig() {
+class SecurityConfig(
+    @Autowired private val userService: UserService,
+    @Autowired private val authSuccessHandler: AuthSuccessHandler,
+    @Autowired private val authFailureHandler: AuthFailureHandler
+) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
     }
 
-    @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeRequests()
-            .antMatchers("/login", "/signup", "/resources/**").permitAll()
-
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/board")
-
-            .and()
-            .csrf()
-            .disable()
-
-        return http.build()
+    override fun configure(http: HttpSecurity?) {
+        http?.csrf()?.disable()
+            ?.authorizeRequests()
+                ?.antMatchers("/", "/login/**", "/signup", "/user", "/js/**", "/css/**")?.permitAll()
+                ?.anyRequest()?.authenticated()
+            ?.and()
+                ?.formLogin()
+                ?.loginPage("/login")
+                ?.loginProcessingUrl("/login/action")
+                ?.successHandler(authSuccessHandler)
+                ?.failureHandler(authFailureHandler)
+            ?.and()
+                ?.logout()
+                ?.logoutRequestMatcher(AntPathRequestMatcher("/logout"))
+                ?.logoutSuccessUrl("/login")
+                ?.invalidateHttpSession(true)
+                ?.deleteCookies("JSESSIONID", "remember-me")
+                ?.permitAll()
+            ?.and()
+                ?.sessionManagement()
+                ?.maximumSessions(1)
+                ?.maxSessionsPreventsLogin(false)
+                ?.expiredUrl("/login?error=true&exception=Have been attemted to login from a new place or session expired")
+            ?.and()
+            ?.and()
+                ?.rememberMe()
+                ?.alwaysRemember(false)
+                ?.tokenValiditySeconds(43200)
+                ?.rememberMeParameter("remember-me")
     }
 
-//    @Bean
-//    fun configure(auth: AuthenticationManagerBuilder?) {
-//        auth?.userDetailsService(userService)?.passwordEncoder(BCryptPasswordEncoder())
-//    }
-
-//    override fun configure(auth: AuthenticationManagerBuilder?) {
-//        auth?.userDetailsService(userService)?.passwordEncoder(BCryptPasswordEncoder())
-//    }
+    override fun configure(auth: AuthenticationManagerBuilder?) {
+        auth?.userDetailsService(userService)?.passwordEncoder(BCryptPasswordEncoder())
+    }
 }

@@ -1,7 +1,9 @@
 package com.example.kotlinspringbootboard.controller
 
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class PageController {
@@ -17,12 +19,18 @@ class PageController {
     }
 
     @GetMapping("/login")
-    fun login(): String {
-        return "user/login"
+    fun login(model: Model,
+              @RequestParam(value = "error", required = false) error: String?,
+              @RequestParam(value = "exception", required = false) exception: String?
+    ): String {
+        model.addAttribute("error", error)
+        model.addAttribute("exception", exception)
+
+        return "/user/login"
     }
 
     @GetMapping("/signup")
     fun signupForm(): String {
-        return "user/signup"
+        return "/user/signup"
     }
 }

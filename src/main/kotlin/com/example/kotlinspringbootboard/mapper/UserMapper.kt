@@ -9,4 +9,8 @@ interface UserMapper {
     fun getUserAccount(userId: String): User
 
     fun saveUser(user: User)
+
+    fun checkUser(userId: String?): Int
+
+
 }
