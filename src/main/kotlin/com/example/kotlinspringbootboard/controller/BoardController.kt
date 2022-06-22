@@ -20,14 +20,14 @@ class BoardController(@Autowired private val boardService: BoardService) {
         var boardList: List<BoardResponseDto> = boardService.findAll()
         model.addAttribute("boardList", boardList)
 
-        return "board/list.html"
+        return "/board/list"
     }
 
     @PostMapping("/board")
     fun write(boardRequestDto: BoardRequestDto): String {
         boardService.save(boardRequestDto)
 
-        return "redirect:/"
+        return "redirect:/board"
     }
 
     @GetMapping("/board/{no}")
@@ -36,7 +36,7 @@ class BoardController(@Autowired private val boardService: BoardService) {
         var boardResponseDto: BoardResponseDto = boardService.findById(no)
         model.addAttribute("boardResponseDto", boardResponseDto)
 
-        return "board/detail.html"
+        return "/board/detail"
     }
 
     @GetMapping("/board/edit/{no}")
@@ -44,20 +44,20 @@ class BoardController(@Autowired private val boardService: BoardService) {
         var boardResponseDto: BoardResponseDto = boardService.findById(no)
         model.addAttribute("boardResponseDto", boardResponseDto)
 
-        return "board/update.html"
+        return "/board/update"
     }
 
     @PutMapping("/board/edit/{no}")
     fun update(boardRequestDto: BoardRequestDto): String {
         boardService.update(boardRequestDto)
 
-        return "redirect:/"
+        return "redirect:/board"
     }
 
     @DeleteMapping("/board/{no}")
     fun delete(@PathVariable("no") no: Long): String {
         boardService.delete(no)
 
-        return "redirect:/"
+        return "redirect:/board"
     }
 }

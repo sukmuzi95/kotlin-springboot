@@ -24,7 +24,7 @@ data class User (
     }
 
     override fun getPassword(): String? {
-        return this.password
+        return userPw
     }
 
     override fun getUsername(): String? {

@@ -15,6 +15,8 @@ spring:
 
   thymeleaf:
     cache: false
+    suffix: .html
+    check-template-location: true
 #  main:
 #    allow-circular-references: true
 

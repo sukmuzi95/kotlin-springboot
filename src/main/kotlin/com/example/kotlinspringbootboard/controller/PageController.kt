@@ -10,7 +10,7 @@ class PageController {
 
     @GetMapping("/board/write")
     fun write(): String {
-        return "board/write.html"
+        return "board/write"
     }
 
     @GetMapping("/")
