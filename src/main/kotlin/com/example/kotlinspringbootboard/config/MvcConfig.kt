@@ -11,6 +11,6 @@ class MvcConfig : WebMvcConfigurer {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry
                 .addResourceHandler("/**")
-                .addResourceLocations("classpath:/templates/", "classpath:/static/")
+                .addResourceLocations("classpath:/templates", "classpath:/static/")
     }
 }

@@ -13,37 +13,20 @@ data class User (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var userNo: Long? = 0,
 
+    @Column(nullable = false, unique = true)
     var userId: String? = null,
+
+    @Column(nullable = false)
     var userPw: String? = null,
+
+    @Column(nullable = false)
     var userName: String? = null,
-    var userAuth: String? = null
-) : UserDetails, BaseTimeEntity() {
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return Collections.singletonList(SimpleGrantedAuthority(this.userAuth))
-    }
+    @Column(nullable = false)
+    var userEmail: String? = null,
 
-    override fun getPassword(): String? {
-        return userPw
-    }
-
-    override fun getUsername(): String? {
-        return userId
-    }
-
-    override fun isAccountNonExpired(): Boolean {
-        return true
-    }
-
-    override fun isAccountNonLocked(): Boolean {
-        return true
-    }
-
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
-
-    override fun isEnabled(): Boolean {
-        return true
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    var role: Role? = null
+) : BaseTimeEntity(), java.io.Serializable {
 }

@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -20,14 +23,22 @@ class UserController(@Autowired private val userService: UserService) {
     /**
      *  회원가입
      *  @param user
-     *  @param model
      *  @return page
      */
     @PostMapping("/user")
-    fun signup(userDto: UserDto): String {
-        userService.save(userDto)
+    @ResponseBody
+    fun signup(@RequestBody userDto: UserDto): Boolean {
+        userDto.userId?.let {
+            if (userService.findByUserId(it).isPresent) {
+                return false
+            } else {
+                userService.save(userDto)
 
-        return "redirect:/login"
+                return true
+            }
+        }?: kotlin.run {
+            return false
+        }
     }
 
     @GetMapping("/logout")

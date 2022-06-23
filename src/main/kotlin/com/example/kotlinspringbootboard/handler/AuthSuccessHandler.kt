@@ -16,7 +16,7 @@ class AuthSuccessHandler(@Autowired userRepository: UserRepository) : SimpleUrlA
         response: HttpServletResponse?,
         authentication: Authentication?
     ) {
-        defaultTargetUrl = "/board"
+        defaultTargetUrl = "/index"
         super.onAuthenticationSuccess(request, response, authentication)
     }
 }

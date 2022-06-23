@@ -1,9 +1,14 @@
 package com.example.kotlinspringbootboard.controller
 
+import com.example.kotlinspringbootboard.dto.UserSession
+import com.example.kotlinspringbootboard.entity.User
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
+import javax.servlet.http.HttpSession
 
 @Controller
 class PageController {
@@ -14,8 +19,22 @@ class PageController {
     }
 
     @GetMapping("/")
-    fun root(): String {
-        return "redirect:/login"
+    fun root(@AuthenticationPrincipal user: User?): String {
+        println(user?.userId)
+        if (user == null) {
+            return "redirect:/login"
+        }
+        return "index"
+    }
+
+    @GetMapping("/index")
+    fun index(model: Model, @AuthenticationPrincipal user: User?): String {
+        println(user?.userId)
+        if (user == null) {
+            return "redirect:/login"
+        }
+
+        return "index"
     }
 
     @GetMapping("/login")

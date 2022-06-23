@@ -1,14 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <link rel="stylesheet" th:href="@{/css/board.css}">
-</head>
-<body>
-    <!-- HEADER -->
-    <div th:insert="common/header.html" id="header"></div>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
     <a th:href="@{/post}">글쓰기</a>
     <table>
         <thead>
@@ -44,8 +36,5 @@
             </tr>
         </tbody>
     </table>
-
-    <!-- FOOTER -->
-    <div th:insert="common/footer.html" id="footer"></div>
-</body>
+</th:block>
 </html>
