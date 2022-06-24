@@ -1,3 +1,6 @@
+server:
+  port: 1234
+
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -17,6 +20,22 @@ spring:
     cache: false
     suffix: .html
     check-template-location: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kocomuzi@gmail.com
+    password: alstjr1234!@
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 #  main:
 #    allow-circular-references: true
 

@@ -1,14 +1,13 @@
 package com.example.kotlinspringbootboard.controller
 
-import com.example.kotlinspringbootboard.dto.UserSession
-import com.example.kotlinspringbootboard.entity.User
+import com.example.kotlinspringbootboard.dto.CustomUserDetails
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import javax.servlet.http.HttpSession
+import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 class PageController {
@@ -19,22 +18,27 @@ class PageController {
     }
 
     @GetMapping("/")
-    fun root(@AuthenticationPrincipal user: User?): String {
-        println(user?.userId)
-        if (user == null) {
-            return "redirect:/login"
+    fun root(model: Model, authentication: Authentication?): String {
+        return if (authentication?.isAuthenticated == false || authentication == null) {
+            "redirect:/login"
+        } else {
+            val user: CustomUserDetails = authentication.principal as CustomUserDetails
+            model.addAttribute("user", user)
+
+            "index"
         }
-        return "index"
     }
 
     @GetMapping("/index")
-    fun index(model: Model, @AuthenticationPrincipal user: User?): String {
-        println(user?.userId)
-        if (user == null) {
-            return "redirect:/login"
-        }
+    fun index(model: Model, authentication: Authentication?): String {
+        return if (authentication?.isAuthenticated == false || authentication == null) {
+            "redirect:/login"
+        } else {
+            val user: CustomUserDetails = authentication.principal as CustomUserDetails
+            model.addAttribute("user", user)
 
-        return "index"
+            "index"
+        }
     }
 
     @GetMapping("/login")
@@ -51,5 +55,24 @@ class PageController {
     @GetMapping("/signup")
     fun signupForm(): String {
         return "/user/signup"
+    }
+
+    @GetMapping("/forgot-password")
+    fun forgotPasswordForm(): String {
+        return "/user/forgot-password"
+    }
+
+    @GetMapping("/login/kakao")
+    fun kakaoLogin(): String {
+        val REST_API_KEY: String = "90b37669abce7ae3fe1d94c0cd666d30"
+        val REDIRECT_URI: String = "http://localhost:1234/app/kakao"
+
+        return "kauth.kakao.com/oauth/authorize?client_id=$REST_API_KEY&redirect_uri=$REDIRECT_URI&response_type=code"
+    }
+
+    @RequestMapping("/app/kakao")
+    @ResponseBody
+    fun kakaoCallback(@RequestParam code: String) {
+        println("code : $code")
     }
 }

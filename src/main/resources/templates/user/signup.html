@@ -104,6 +104,10 @@
         $('form').on('submit', function(e) {
             e.preventDefault();
 
+            if ($('#userPw').val() !== $('#userPwRepeat').val()) {
+                $.notify('비밀 번호를 확인해 주세요.');
+            }
+
             let $form = $(this).closest('form');
             let formData = $form.serializeObject();
 

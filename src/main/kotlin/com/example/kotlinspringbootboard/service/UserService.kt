@@ -1,20 +1,13 @@
 package com.example.kotlinspringbootboard.service
 
-import com.example.kotlinspringbootboard.dto.CustomUserDetails
 import com.example.kotlinspringbootboard.dto.UserDto
-import com.example.kotlinspringbootboard.dto.UserSession
 import com.example.kotlinspringbootboard.entity.User
 import com.example.kotlinspringbootboard.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-
-import javax.servlet.http.HttpSession
 
 @Service
 class UserService(@Autowired private val userRepository: UserRepository) {

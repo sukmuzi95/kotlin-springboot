@@ -3,26 +3,20 @@ package com.example.kotlinspringbootboard.config
 import com.example.kotlinspringbootboard.handler.AuthFailureHandler
 import com.example.kotlinspringbootboard.handler.AuthSuccessHandler
 import com.example.kotlinspringbootboard.service.CustomUserDetailsService
-import com.example.kotlinspringbootboard.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.web.DefaultSecurityFilterChain
-import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-//    @Autowired private val userService: UserService,
     @Autowired private val customUserDetailsService: CustomUserDetailsService,
     @Autowired private val authSuccessHandler: AuthSuccessHandler,
     @Autowired private val authFailureHandler: AuthFailureHandler
@@ -36,7 +30,7 @@ class SecurityConfig(
     override fun configure(http: HttpSecurity?) {
         http?.csrf()?.disable()
             ?.authorizeRequests()
-                ?.antMatchers("/", "/login/**", "/signup", "/user", "/js/**", "/css/**")?.permitAll()
+                ?.antMatchers("/", "/login/**", "/signup", "/user", "/js/**", "/css/**", "/app/**", "/forgot-password")?.permitAll()
                 ?.anyRequest()?.authenticated()
             ?.and()
                 ?.formLogin()

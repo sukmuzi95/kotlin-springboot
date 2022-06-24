@@ -1,10 +1,7 @@
 package com.example.kotlinspringbootboard.entity
 
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
-import java.util.Collections
 import javax.persistence.*
+import java.io.Serializable
 
 @Entity
 @Table(name = "TB_USER")
@@ -28,5 +25,5 @@ data class User (
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var role: Role? = null
-) : BaseTimeEntity(), java.io.Serializable {
+) : BaseTimeEntity(), Serializable {
 }

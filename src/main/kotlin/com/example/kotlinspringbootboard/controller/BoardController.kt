@@ -3,7 +3,9 @@ package com.example.kotlinspringbootboard.controller
 import com.example.kotlinspringbootboard.service.BoardService
 import com.example.kotlinspringbootboard.dto.BoardRequestDto
 import com.example.kotlinspringbootboard.dto.BoardResponseDto
+import com.example.kotlinspringbootboard.dto.CustomUserDetails
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -16,11 +18,18 @@ import org.springframework.web.bind.annotation.PutMapping
 class BoardController(@Autowired private val boardService: BoardService) {
 
     @GetMapping("/board")
-    fun list(model: Model): String {
-        var boardList: List<BoardResponseDto> = boardService.findAll()
-        model.addAttribute("boardList", boardList)
+    fun list(model: Model, authentication: Authentication?): String {
+        return if (authentication?.isAuthenticated == false || authentication == null) {
+            "redirect:/login"
+        } else {
+            val user: CustomUserDetails = authentication.principal as CustomUserDetails
+            val boardList: List<BoardResponseDto> = boardService.findAll()
 
-        return "/board/list"
+            model.addAttribute("boardList", boardList)
+            model.addAttribute("user", user)
+
+            "/board/list"
+        }
     }
 
     @PostMapping("/board")
