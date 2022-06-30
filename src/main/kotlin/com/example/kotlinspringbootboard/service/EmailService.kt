@@ -10,7 +10,7 @@ import javax.mail.internet.MimeMessage
 import kotlin.random.Random
 
 @Service
-class EmailService() {
+class EmailService() : JavaMailSender {
 
     @Bean
     fun mailSender(): JavaMailSender {
