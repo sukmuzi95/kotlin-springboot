@@ -13,10 +13,10 @@ data class BoardResponseDto(
     var updateTime: LocalDateTime? = null
 ) {
     constructor(entity: Board) : this() {
-        this.id = entity.id
-        this.title = entity.title
-        this.content = entity.content
-        this.readCnt = entity.readCnt
+        this.id = entity.boardNo
+        this.title = entity.boardTitle
+        this.content = entity.boardContent
+        this.readCnt = entity.readCount
         this.registerId = entity.registerId
         this.registerTime = entity.registerTime
         this.updateTime = entity.updateTime

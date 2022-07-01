@@ -11,11 +11,11 @@ import javax.persistence.Table
 data class Board(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    var boardNo: Long? = null,
 
-    var title: String? = null,
-    var content: String? = null,
-    var readCnt: Int? = 0,
+    var boardTitle: String? = null,
+    var boardContent: String? = null,
+    var readCount: Int? = 0,
     var registerId: String? = null
 
 ) : BaseTimeEntity()

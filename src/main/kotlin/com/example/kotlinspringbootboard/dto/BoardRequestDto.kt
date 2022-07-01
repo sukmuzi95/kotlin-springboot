@@ -11,8 +11,8 @@ data class BoardRequestDto(
 
 fun BoardRequestDto.toEntity(boardRequestDto: BoardRequestDto): Board {
     return Board().apply {
-        this.title = boardRequestDto.title
-        this.content = boardRequestDto.content
+        this.boardTitle = boardRequestDto.title
+        this.boardContent = boardRequestDto.content
         this.registerId = boardRequestDto.registerId
     }
 }

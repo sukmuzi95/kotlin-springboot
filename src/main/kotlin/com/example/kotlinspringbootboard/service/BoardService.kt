@@ -19,7 +19,7 @@ class BoardService(@Autowired private val boardRepository: BoardRepository) {
         return if (result != null) {
             update(boardRequestDto)
         } else {
-            boardRepository.save(boardRequestDto.toEntity(boardRequestDto)).id
+            boardRepository.save(boardRequestDto.toEntity(boardRequestDto)).boardNo
         }
 
 //        return boardRepository.save(boardRequestDto.toEntity(boardRequestDto)).id
