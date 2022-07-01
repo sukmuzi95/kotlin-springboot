@@ -5,7 +5,6 @@ import com.example.kotlinspringbootboard.entity.User
 
 class UserDto {
 
-    var userId: String? = null
     var userPw: String? = null
     var userName: String? = null
     var userEmail: String? = null
@@ -13,7 +12,6 @@ class UserDto {
 
     fun toEntity(userDto: UserDto): User {
         var user: User = User().apply {
-            this.userId = userDto.userId
             this.userPw = userDto.userPw
             this.userName = userDto.userName
             this.userEmail = userDto.userEmail

@@ -10,9 +10,6 @@ data class User (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var userNo: Long? = 0,
 
-    @Column(nullable = false, unique = true)
-    var userId: String? = null,
-
     @Column(nullable = false)
     var userPw: String? = null,
 

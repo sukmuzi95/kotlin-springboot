@@ -30,7 +30,10 @@ class SecurityConfig(
     override fun configure(http: HttpSecurity?) {
         http?.csrf()?.disable()
             ?.authorizeRequests()
-                ?.antMatchers("/", "/login/**", "/signup", "/user", "/js/**", "/css/**", "/app/**", "/forgot-password")?.permitAll()
+                ?.antMatchers(
+                    "/", "/login/**", "/signup", "/user/**", "/js/**", "/css/**", "/app/**", "/forgot-password",
+                    "/user/mail-auth", "/update-password/**"
+                )?.permitAll()
                 ?.anyRequest()?.authenticated()
             ?.and()
                 ?.formLogin()
@@ -65,13 +68,9 @@ class SecurityConfig(
             .antMatchers("/resources/**")
     }
 
-//    override fun configure(auth: AuthenticationManagerBuilder?) {
-//        auth?.userDetailsService(customUserDetailsService)?.passwordEncoder(BCryptPasswordEncoder())
-//    }
-
     @Bean
     fun authenticationProvider(): DaoAuthenticationProvider {
-        var authProvider: DaoAuthenticationProvider = DaoAuthenticationProvider()
+        var authProvider = DaoAuthenticationProvider()
 
         authProvider.setUserDetailsService(customUserDetailsService)
         authProvider.setPasswordEncoder(BCryptPasswordEncoder())

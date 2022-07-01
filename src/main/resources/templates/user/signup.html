@@ -30,13 +30,10 @@
                         </div>
                         <form class="user" th:action="@{/user}" method="post" th:object="${userDto}">
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="userId" name="userId" placeholder="User Id" required>
+                                <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" placeholder="Email Address" required>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="userName" name="userName" placeholder="User Name" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" placeholder="Email Address" required>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
@@ -82,34 +79,34 @@
 
 <script>
     $.fn.serializeObject = function() {
-        var obj = null;
+        let obj = null
         try {
             if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
-                var arr = this.serializeArray();
+                let arr = this.serializeArray()
                 if (arr) {
-                    obj = {};
+                    obj = {}
                     jQuery.each(arr, function() {
-                        obj[this.name] = this.value;
+                        obj[this.name] = this.value
                     });
                 }
             }
         } catch (e) {
-            alert(e.message);
+            alert(e.message)
         } finally {
         }
-        return obj;
+        return obj
     };
 
     $(function() {
         $('form').on('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault()
 
             if ($('#userPw').val() !== $('#userPwRepeat').val()) {
-                $.notify('비밀 번호를 확인해 주세요.');
+                $.notify('비밀 번호를 확인해 주세요.')
             }
 
-            let $form = $(this).closest('form');
-            let formData = $form.serializeObject();
+            let $form = $(this).closest('form')
+            let formData = $form.serializeObject()
 
             $.ajax({
                 type: $form.attr('method'),
@@ -120,18 +117,18 @@
 
                 success: function(result) {
                     if (result) {
-                        $.notify('회원 가입이 완료되었습니다.');
-                        location.href = '/login';
+                        $.notify('회원 가입이 완료되었습니다.')
+                        location.href = '/login'
                     } else {
-                        $.notify('중복된 아이디 입니다.');
+                        $.notify('중복된 아이디 입니다.')
                     }
                 },
                 error: function(error) {
-                    alert(error);
+                    alert(error)
                 }
-            });
+            })
         })
-    });
+    })
 </script>
 </body>
 </html>
