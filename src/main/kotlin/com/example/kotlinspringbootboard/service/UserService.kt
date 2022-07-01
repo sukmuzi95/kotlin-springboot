@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
-class UserService(@Autowired private val userRepository: UserRepository) {
+class UserService(private val userRepository: UserRepository) {
 
     @Transactional
     fun save(userDto: UserDto): User {

@@ -17,9 +17,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    @Autowired private val customUserDetailsService: CustomUserDetailsService,
-    @Autowired private val authSuccessHandler: AuthSuccessHandler,
-    @Autowired private val authFailureHandler: AuthFailureHandler
+    private val customUserDetailsService: CustomUserDetailsService,
+    private val authSuccessHandler: AuthSuccessHandler,
+    private val authFailureHandler: AuthFailureHandler
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean

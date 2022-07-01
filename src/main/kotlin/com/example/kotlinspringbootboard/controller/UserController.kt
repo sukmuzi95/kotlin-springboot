@@ -17,9 +17,11 @@ import javax.servlet.http.HttpServletResponse
 
 @Controller
 class UserController(
-    @Autowired private val userService: UserService,
-    @Autowired private val emailService: EmailService
+    private val userService: UserService
 ) {
+
+    @Autowired
+    private lateinit var emailService: EmailService
 
     /**
      *  회원가입
