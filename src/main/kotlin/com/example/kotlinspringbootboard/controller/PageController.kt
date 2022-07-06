@@ -1,5 +1,6 @@
 package com.example.kotlinspringbootboard.controller
 
+import com.example.kotlinspringbootboard.dto.BoardResponseDto
 import com.example.kotlinspringbootboard.dto.CustomUserDetails
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
@@ -10,30 +11,28 @@ import org.springframework.web.bind.annotation.*
 class PageController {
 
     @GetMapping("/board/write")
-    fun write(): String {
-        return "board/write"
-    }
-
-    @GetMapping("/")
-    fun root(model: Model, authentication: Authentication?): String {
+    fun write(authentication: Authentication?): String {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
-            val user: CustomUserDetails = authentication.principal as CustomUserDetails
-            model.addAttribute("user", user)
+            "/board/write"
+        }
+    }
 
+    @GetMapping("/")
+    fun root(authentication: Authentication?): String {
+        return if (authentication?.isAuthenticated == false || authentication == null) {
+            "redirect:/login"
+        } else {
             "index"
         }
     }
 
     @GetMapping("/index")
-    fun index(model: Model, authentication: Authentication?): String {
+    fun index(authentication: Authentication?): String {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
-            val user: CustomUserDetails = authentication.principal as CustomUserDetails
-            model.addAttribute("user", user)
-
             "index"
         }
     }

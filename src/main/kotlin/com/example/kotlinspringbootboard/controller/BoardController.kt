@@ -22,11 +22,9 @@ class BoardController(@Autowired private val boardService: BoardService) {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
-            val user: CustomUserDetails = authentication.principal as CustomUserDetails
             val boardList: List<BoardResponseDto> = boardService.findAll()
 
             model.addAttribute("boardList", boardList)
-            model.addAttribute("user", user)
 
             "/board/list"
         }
