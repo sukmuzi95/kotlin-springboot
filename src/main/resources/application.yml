@@ -21,6 +21,10 @@ spring:
     suffix: .html
     check-template-location: true
 
+  devtools:
+    livereload:
+      enabled: true
+
   mail:
     host: smtp.gmail.com
     port: 587

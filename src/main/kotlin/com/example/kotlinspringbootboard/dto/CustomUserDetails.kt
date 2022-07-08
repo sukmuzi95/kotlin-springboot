@@ -19,7 +19,7 @@ class CustomUserDetails(@Autowired private val user: User) : UserDetails {
     }
 
     override fun getUsername(): String? {
-        return user.userEmail
+        return user.userName
     }
 
     override fun isAccountNonExpired(): Boolean {

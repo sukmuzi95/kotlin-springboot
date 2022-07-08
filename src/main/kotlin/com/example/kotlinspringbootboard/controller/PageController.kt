@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*
 class PageController {
 
     @GetMapping("/board/write")
-    fun write(authentication: Authentication?): String {
+    fun write(authentication: Authentication?, model: Model): String {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
+            model.addAttribute("username", authentication.name)
+
             "/board/write"
         }
     }

@@ -32,6 +32,7 @@ class BoardController(@Autowired private val boardService: BoardService) {
 
     @PostMapping("/board")
     fun write(boardRequestDto: BoardRequestDto): String {
+        println(boardRequestDto)
         boardService.save(boardRequestDto)
 
         return "redirect:/board"

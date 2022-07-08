@@ -71,9 +71,12 @@
             <div class="container-fluid" style="width: 80%">
 <!--                <div id="editor"></div>-->
                 <form action="/board" method="post">
-                    <input type="text" class="form-control" placeholder="Title">
-                    <input type="text" class="form-control" th:value="${sec:authentication='name'}">
-                    <br>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Title" name="title">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" th:value="${username}" readonly name="writer">
+                    </div>
                     <div id="editor">
                         <textarea name="content"></textarea>
                     </div>
