@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 class BoardController(@Autowired private val boardService: BoardService) {
@@ -31,18 +33,16 @@ class BoardController(@Autowired private val boardService: BoardService) {
     }
 
     @PostMapping("/board")
-    fun write(boardRequestDto: BoardRequestDto): String {
-        println(boardRequestDto)
-        boardService.save(boardRequestDto)
-
-        return "redirect:/board"
+    @ResponseBody
+    fun insert(@RequestBody boardRequestDto: BoardRequestDto): Int {
+        return boardService.insert(boardRequestDto)
     }
 
     @GetMapping("/board/{no}")
     fun detail(@PathVariable("no") no: Long, model: Model): String {
-        boardService.updateReadCount(no)
+        //boardService.updateReadCount(no)
         var boardResponseDto: BoardResponseDto = boardService.findById(no)
-        model.addAttribute("boardResponseDto", boardResponseDto)
+        model.addAttribute("board", boardResponseDto)
 
         return "/board/detail"
     }
@@ -50,16 +50,15 @@ class BoardController(@Autowired private val boardService: BoardService) {
     @GetMapping("/board/edit/{no}")
     fun edit(@PathVariable("no") no: Long, model: Model): String {
         var boardResponseDto: BoardResponseDto = boardService.findById(no)
-        model.addAttribute("boardResponseDto", boardResponseDto)
+        model.addAttribute("board", boardResponseDto)
 
         return "/board/update"
     }
 
-    @PutMapping("/board/edit/{no}")
-    fun update(boardRequestDto: BoardRequestDto): String {
-        boardService.update(boardRequestDto)
-
-        return "redirect:/board"
+    @PutMapping("/board/edit")
+    @ResponseBody
+    fun update(@RequestBody boardRequestDto: BoardRequestDto): Int {
+        return boardService.update(boardRequestDto)
     }
 
     @DeleteMapping("/board/{no}")

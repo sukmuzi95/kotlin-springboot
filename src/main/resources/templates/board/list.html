@@ -53,29 +53,20 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Title</th>
-                                    <th>Writer</th>
-                                    <th>Write Date</th>
-                                    <th>Read Count</th>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>작성일</th>
+                                    <th>조회수</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Title</th>
-                                    <th>Writer</th>
-                                    <th>Write Date</th>
-                                    <th>Read Count</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 <tr th:each="board : ${boardList}">
-                                    <td th:text="${board.id}"></td>
-                                    <td th:text="${board.title}"></td>
-                                    <td th:text="${board.registerId}"></td>
+                                    <td th:text="${board.boardNo}"></td>
+                                    <td><a th:href="@{'/board/' + ${board.boardNo}}" th:text="${board.boardTitle}"></a></td>
+                                    <td th:text="${board.userName}"></td>
                                     <td th:text="${#temporals.format(board.registerTime, 'yyyy-MM-dd HH:mm')}"></td>
-                                    <td th:text="${board.readCnt}"></td>
+                                    <td th:text="${board.readCount}"></td>
                                 </tr>
                                 </tbody>
                             </table>

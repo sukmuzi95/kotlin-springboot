@@ -18,14 +18,14 @@ interface BoardRepository : JpaRepository<Board, Long> {
                 "WHERE ID = :#{#boardRequestDto.id}"
 
         const val UPDATE_READCOUNT: String = "UPDATE TB_BOARD " +
-                "SET READ_CNT = READ_CNT + 1 " +
-                "WHERE ID = :#{#id}"
+                "SET READ_COUNT = READ_COUNT + 1 " +
+                "WHERE BOARD_NO = :#{#no}"
     }
 
     @Transactional
     @Modifying
     @Query(value = UPDATE_READCOUNT, nativeQuery = true)
-    fun updateReadCount(id: Long)
+    fun updateReadCount(no: Long)
 
     @Transactional
     @Modifying
