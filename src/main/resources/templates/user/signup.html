@@ -28,7 +28,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form class="user" th:action="@{/user}" method="post" th:object="${userDto}">
+                        <form class="user" th:action="@{/api/v1/user}" method="post" th:object="${userDto}">
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" placeholder="Email Address" required>
                             </div>
@@ -116,7 +116,7 @@
                 url: $form.attr('action'),
 
                 success: function(result) {
-                    if (result) {
+                    if (result.status == 200) {
                         $.notify('회원 가입이 완료되었습니다.')
                         location.href = '/login'
                     } else {

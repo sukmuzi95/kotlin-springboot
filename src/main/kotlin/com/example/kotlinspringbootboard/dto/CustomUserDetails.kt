@@ -14,11 +14,11 @@ class CustomUserDetails(@Autowired private val user: User) : UserDetails {
         return collectors
     }
 
-    override fun getPassword(): String? {
+    override fun getPassword(): String {
         return user.userPw
     }
 
-    override fun getUsername(): String? {
+    override fun getUsername(): String {
         return user.userName
     }
 

@@ -30,6 +30,12 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    api("io.jsonwebtoken", "jjwt-api", "0.11.2")
+    api("io.jsonwebtoken", "jjwt-impl", "0.11.2")
+    api("io.jsonwebtoken", "jjwt-jackson", "0.11.2")
+
+    api("com.googlecode.json-simple", "json-simple", "1.1.1")
 }
 
 tasks.withType<KotlinCompile> {

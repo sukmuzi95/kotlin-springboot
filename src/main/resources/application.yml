@@ -43,6 +43,9 @@ spring:
   main:
     allow-circular-references: true
 
+jwt:
+  secret: jwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecret
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:

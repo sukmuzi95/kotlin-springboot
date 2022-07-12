@@ -19,13 +19,27 @@ class UserService(
     private val javaMailSender: JavaMailSender
 ) {
 
-    @Transactional
-    fun save(userDto: UserDto): User {
-        val encoder = BCryptPasswordEncoder()
-        userDto.userPw = encoder.encode(userDto.userPw)
 
-        return userRepository.save(userDto.toEntity(userDto))
+    @Transactional
+    fun save(user: User) {
+        val alreadyUser = user.userEmail?.let { userRepository.findByUserEmail(it) }
+        if (alreadyUser?.isPresent == true) {
+            throw Exception("email duplicated")
+        }
+
+        val encoder = BCryptPasswordEncoder()
+        user.userPw = encoder.encode(user.userPw)
+
+        userRepository.save(user)
     }
+
+//    @Transactional
+//    fun save(userDto: UserDto): User {
+//        val encoder = BCryptPasswordEncoder()
+//        userDto.userPw = encoder.encode(userDto.userPw)
+//
+//        return userRepository.save(userDto.toEntity(userDto))
+//    }
 
     @Transactional
     fun update(email: String, password: String): Int {

@@ -1,7 +1,12 @@
 package com.example.kotlinspringbootboard.controller
 
 import com.example.kotlinspringbootboard.dto.UserDto
+import com.example.kotlinspringbootboard.entity.Role
+import com.example.kotlinspringbootboard.entity.User
+import com.example.kotlinspringbootboard.response.ApiResponse
 import com.example.kotlinspringbootboard.service.UserService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
 import org.springframework.stereotype.Controller
@@ -24,21 +29,46 @@ class UserController(
      *  @param userDto
      *  @return page
      */
-    @PostMapping("/user")
-    @ResponseBody
-    fun signup(@RequestBody userDto: UserDto): Boolean {
-        userDto.userEmail?.let {
-            if (userService.findByUserEmail(it).isPresent) {
-                return false
-            } else {
-                userService.save(userDto)
 
-                return true
+    @PostMapping("/api/v1/user")
+    @ResponseBody
+    fun signup(@RequestBody userDto: UserDto): ResponseEntity<ApiResponse> {
+        val response = ApiResponse()
+        val alreadyUser = userService.findByUserEmail(userDto.userEmail)
+
+        return if (alreadyUser.isPresent) {
+            response.status = 201
+
+            ResponseEntity(response, HttpStatus.OK)
+        } else {
+            var user = User().apply {
+                this.userEmail = userDto.userEmail
+                this.userPw = userDto.userPw
+                this.userName = userDto.userName
+                this.role = Role.USER
             }
-        }?: kotlin.run {
-            return false
+
+            userService.save(user)
+
+            ResponseEntity(response, HttpStatus.OK)
         }
     }
+
+//    @PostMapping("/user")
+//    @ResponseBody
+//    fun signup(@RequestBody userDto: UserDto): Boolean {
+//        userDto.userEmail?.let {
+//            if (userService.findByUserEmail(it).isPresent) {
+//                return false
+//            } else {
+//                userService.save(userDto)
+//
+//                return true
+//            }
+//        }?: kotlin.run {
+//            return false
+//        }
+//    }
 
     @GetMapping("/logout")
     fun logout(request: HttpServletRequest, response: HttpServletResponse): String {

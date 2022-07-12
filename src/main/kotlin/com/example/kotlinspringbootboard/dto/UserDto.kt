@@ -5,9 +5,9 @@ import com.example.kotlinspringbootboard.entity.User
 
 class UserDto {
 
-    var userPw: String? = null
-    var userName: String? = null
-    var userEmail: String? = null
+    var userPw: String = ""
+    var userName: String = ""
+    var userEmail: String = ""
     lateinit var role: Role
 
     fun toEntity(userDto: UserDto): User {
