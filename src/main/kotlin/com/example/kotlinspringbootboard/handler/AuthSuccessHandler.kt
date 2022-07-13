@@ -1,22 +1,26 @@
 package com.example.kotlinspringbootboard.handler
 
-import com.example.kotlinspringbootboard.repository.UserRepository
-import org.springframework.beans.factory.annotation.Autowired
+import com.example.kotlinspringbootboard.jwt.JwtProvider
+import com.example.kotlinspringbootboard.response.ApiResponse
 import org.springframework.security.core.Authentication
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AuthSuccessHandler(@Autowired userRepository: UserRepository) : SimpleUrlAuthenticationSuccessHandler() {
+class AuthSuccessHandler(private val jwtProvider: JwtProvider) : AuthenticationSuccessHandler {
 
     override fun onAuthenticationSuccess(
-        request: HttpServletRequest?,
-        response: HttpServletResponse?,
-        authentication: Authentication?
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        authentication: Authentication
     ) {
-        defaultTargetUrl = "/index"
-        super.onAuthenticationSuccess(request, response, authentication)
+        println("AuthSuccessHandler")
+        SecurityContextHolder.getContext().authentication = authentication
+        val token = jwtProvider.generateToken(authentication)
+
+        ApiResponse.token(response, token)
     }
 }

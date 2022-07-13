@@ -44,7 +44,7 @@ spring:
     allow-circular-references: true
 
 jwt:
-  secret: jwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecretjwtsecret
+  secret: "spring-security-jwt-ex-secret-key-rms"
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

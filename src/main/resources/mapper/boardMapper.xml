@@ -6,19 +6,19 @@
 
     <insert id="insert" parameterType="com.example.kotlinspringbootboard.dto.BoardRequestDto">
         INSERT INTO TB_BOARD(BOARD_TITLE, BOARD_CONTENT, REGISTER_ID)
-        VALUES (#{title}, #{content, jdbcType=VARCHAR}, (SELECT USER_NO FROM TB_USER WHERE USER_NAME = #{registerId}))
+        VALUES (#{title}, #{content, jdbcType=VARCHAR}, (SELECT ID FROM TB_USER WHERE NICKNAME = #{registerId}))
     </insert>
 
     <select id="findAll" resultType="com.example.kotlinspringbootboard.dto.BoardResponseDto">
-        SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, B.USER_NAME, READ_COUNT, A.REGISTER_TIME, A.UPDATE_TIME
+        SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, B.NICKNAME, READ_COUNT, A.REGISTER_TIME, A.UPDATE_TIME
         FROM TB_BOARD A
-        INNER JOIN TB_USER B ON A.REGISTER_ID = B.USER_NO
+        INNER JOIN TB_USER B ON A.REGISTER_ID = B.ID
     </select>
 
     <select id="findById" resultType="com.example.kotlinspringbootboard.dto.BoardResponseDto">
-        SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, B.USER_NAME, READ_COUNT, A.REGISTER_TIME, A.UPDATE_TIME
+        SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, B.NICKNAME, READ_COUNT, A.REGISTER_TIME, A.UPDATE_TIME
         FROM TB_BOARD A
-        INNER JOIN TB_USER B ON A.REGISTER_ID = B.USER_NO
+        INNER JOIN TB_USER B ON A.REGISTER_ID = B.ID
         WHERE A.BOARD_NO = #{no}
     </select>
 

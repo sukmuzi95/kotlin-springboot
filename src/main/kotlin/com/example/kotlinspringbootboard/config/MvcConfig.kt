@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 class MvcConfig : WebMvcConfigurer {
 
+    companion object {
+        val CLASSPATH_RESOURCE_LOCATIONS = arrayOf("classpath:/templates", "classpath:/static/")
+    }
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry
                 .addResourceHandler("/**")

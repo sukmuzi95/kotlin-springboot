@@ -8,16 +8,16 @@ import java.io.Serializable
 data class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var userNo: Long = 0,
+    var id: Long = 0,
 
     @Column(nullable = false)
-    var userPw: String = "",
+    var password: String = "",
 
     @Column(nullable = false)
-    var userName: String = "",
+    var email: String = "",
 
     @Column(nullable = false)
-    var userEmail: String = "",
+    var nickname: String = "",
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -33,18 +33,18 @@ class UserController(
     @PostMapping("/api/v1/user")
     @ResponseBody
     fun signup(@RequestBody userDto: UserDto): ResponseEntity<ApiResponse> {
-        val response = ApiResponse()
-        val alreadyUser = userService.findByUserEmail(userDto.userEmail)
+        val response = ApiResponse(200, "Success")
+        val alreadyUser = userService.findByUserEmail(userDto.email)
 
         return if (alreadyUser.isPresent) {
-            response.status = 201
+            response.code = 201
 
             ResponseEntity(response, HttpStatus.OK)
         } else {
             var user = User().apply {
-                this.userEmail = userDto.userEmail
-                this.userPw = userDto.userPw
-                this.userName = userDto.userName
+                this.email = userDto.email
+                this.password = userDto.password
+                this.nickname = userDto.nickname
                 this.role = Role.USER
             }
 

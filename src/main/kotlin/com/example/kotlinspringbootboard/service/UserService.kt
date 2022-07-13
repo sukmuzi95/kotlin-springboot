@@ -22,13 +22,13 @@ class UserService(
 
     @Transactional
     fun save(user: User) {
-        val alreadyUser = user.userEmail?.let { userRepository.findByUserEmail(it) }
-        if (alreadyUser?.isPresent == true) {
+        val alreadyUser = user.email.let { userRepository.findByEmail(it) }
+        if (alreadyUser.isPresent) {
             throw Exception("email duplicated")
         }
 
         val encoder = BCryptPasswordEncoder()
-        user.userPw = encoder.encode(user.userPw)
+        user.password = encoder.encode(user.password)
 
         userRepository.save(user)
     }
@@ -44,13 +44,13 @@ class UserService(
     @Transactional
     fun update(email: String, password: String): Int {
         val encoder = BCryptPasswordEncoder()
-        var password = encoder.encode(password)
+        val password = encoder.encode(password)
 
         return userRepository.updateUser(email, password)
     }
 
-    fun findByUserEmail(userEmail: String): Optional<User> {
-        return userRepository.findByUserEmail(userEmail)
+    fun findByUserEmail(email: String): Optional<User> {
+        return userRepository.findByEmail(email)
     }
 
     fun createMessage(to: String): String {

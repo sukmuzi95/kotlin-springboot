@@ -1,7 +1,5 @@
 package com.example.kotlinspringbootboard.controller
 
-import com.example.kotlinspringbootboard.dto.BoardResponseDto
-import com.example.kotlinspringbootboard.dto.CustomUserDetails
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -40,13 +38,7 @@ class PageController {
     }
 
     @GetMapping("/login")
-    fun login(model: Model,
-              @RequestParam(value = "error", required = false) error: String?,
-              @RequestParam(value = "exception", required = false) exception: String?
-    ): String {
-        model.addAttribute("error", error)
-        model.addAttribute("exception", exception)
-
+    fun login(): String {
         return "/user/login"
     }
 

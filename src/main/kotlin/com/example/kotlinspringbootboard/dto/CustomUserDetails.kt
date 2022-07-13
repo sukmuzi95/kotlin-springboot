@@ -1,25 +1,24 @@
 package com.example.kotlinspringbootboard.dto
 
 import com.example.kotlinspringbootboard.entity.User
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class CustomUserDetails(@Autowired private val user: User) : UserDetails {
+class CustomUserDetails(private val user: User) : UserDetails {
 
-    override fun getAuthorities(): Collection<out GrantedAuthority> {
-        var collectors: Collection<GrantedAuthority> = ArrayList()
+    override fun getAuthorities(): Collection<GrantedAuthority> {
+        val collectors: Collection<GrantedAuthority> = ArrayList()
         collectors.plus("ROLE_${user.role}")
 
         return collectors
     }
 
     override fun getPassword(): String {
-        return user.userPw
+        return user.password
     }
 
     override fun getUsername(): String {
-        return user.userName
+        return user.email
     }
 
     override fun isAccountNonExpired(): Boolean {

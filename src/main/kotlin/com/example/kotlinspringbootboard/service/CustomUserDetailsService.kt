@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service
 @Service
 class CustomUserDetailsService(private val userRepository: UserRepository) : UserDetailsService {
 
-    override fun loadUserByUsername(userEmail: String): UserDetails {
-        var user: User = userRepository.findByUserEmail(userEmail)
+    override fun loadUserByUsername(email: String): UserDetails {
+        val user: User = userRepository.findByEmail(email)
             .orElseThrow {
                 Throwable()
-                UsernameNotFoundException("해당 사용자가 존재하지 않습니다. $userEmail")
+                UsernameNotFoundException("해당 사용자가 존재하지 않습니다. $email")
             }
 
         return CustomUserDetails(user)

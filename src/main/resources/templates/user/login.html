@@ -26,7 +26,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
-                                <form class="user" action="/api/v1/authenticate" method="post">
+                                <form class="user" action="/loginProc" method="post">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
                                                id="username" aria-describedby="emailHelp"
@@ -75,8 +75,8 @@
 <script>
     $('#login').on('click', function() {
         let data = {
-            username: $('#username').val(),
-            password: $('#password').val()
+            email : $('#username').val(),
+            password : $('#password').val()
         }
 
         $.ajax({
@@ -84,22 +84,26 @@
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(data),
-            url: '/api/v1/authenticate',
+            url: '/loginProc',
 
-            success: function(result) {
-                if (result.status == 200) {
-                    console.log(result)
+            success: function(response) {
+                if (response.code === 200) {
+                    console.log(response)
+                    // $.cookie('token', result['result'], {path: '/index'})
+                    localStorage.setItem('token', response.result)
+                    //window.location.replace("/index")
                     //$.notify('회원 가입이 완료되었습니다.')
-                    location.href = '/index'
+                    //location.href = '/index'
                 } else {
-                    $.notify(result)
+                    $.notify('이메일 또는 비밀번호를 확인해주세요.')
                 }
             },
-            error: function(error) {
-                alert(error)
+            error: function() {
+                $.notify('이메일 또는 비밀번호를 확인해주세요.')
             }
         })
     })
 </script>
+<script src="/js/notify/notify.min.js"></script>
 </body>
 </html>

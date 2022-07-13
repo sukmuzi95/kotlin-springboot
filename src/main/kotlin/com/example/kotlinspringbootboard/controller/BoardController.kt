@@ -3,7 +3,6 @@ package com.example.kotlinspringbootboard.controller
 import com.example.kotlinspringbootboard.service.BoardService
 import com.example.kotlinspringbootboard.dto.BoardRequestDto
 import com.example.kotlinspringbootboard.dto.BoardResponseDto
-import com.example.kotlinspringbootboard.dto.CustomUserDetails
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
