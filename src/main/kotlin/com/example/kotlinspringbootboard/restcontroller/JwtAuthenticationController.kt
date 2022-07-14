@@ -3,7 +3,7 @@
 //import com.example.kotlinspringbootboard.dto.CustomUserDetails
 //import com.example.kotlinspringbootboard.jwt.JwtProvider
 //import com.example.kotlinspringbootboard.jwt.JwtRequest
-//import com.example.kotlinspringbootboard.response.ApiResponse
+//import com.example.kotlinspringbootboard.common.ApiResponse
 //import com.example.kotlinspringbootboard.service.CustomUserDetailsService
 //import org.springframework.http.HttpStatus
 //import org.springframework.http.ResponseEntity

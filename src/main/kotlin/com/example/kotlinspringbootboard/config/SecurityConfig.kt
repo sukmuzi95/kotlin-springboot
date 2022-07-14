@@ -1,13 +1,10 @@
 package com.example.kotlinspringbootboard.config
 
-import com.example.kotlinspringbootboard.filter.CustomAuthenticationFilter
-import com.example.kotlinspringbootboard.handler.AuthFailureHandler
-import com.example.kotlinspringbootboard.handler.AuthSuccessHandler
-import com.example.kotlinspringbootboard.jwt.JwtAuthenticationEntryPoint
-import com.example.kotlinspringbootboard.filter.JwtFilter
-import com.example.kotlinspringbootboard.handler.AccessDeniedHandler
+import com.example.kotlinspringbootboard.jwt.JwtFilter
 import com.example.kotlinspringbootboard.jwt.JwtProvider
-import com.example.kotlinspringbootboard.service.CustomUserDetailsService
+import com.example.kotlinspringbootboard.security.CustomAuthenticationFilter
+import com.example.kotlinspringbootboard.security.handler.*
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -21,12 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val customUserDetailsService: CustomUserDetailsService,
-    private val authSuccessHandler: AuthSuccessHandler,
-    private val authFailureHandler: AuthFailureHandler,
-    private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
-//    private val jwtFilter: JwtFilter,
-    private val accessDeniedHandler: AccessDeniedHandler,
+    private val authenticationSuccessHandler: AuthenticationSuccessHandlerImpl,
+    private val authenticationFailureHandler: AuthenticationFailureHandlerImpl,
+    private val authenticationEntryPointImpl: AuthenticationEntryPointImpl,
+    private val accessDeniedHandlerImpl: AccessDeniedHandlerImpl,
     private val jwtProvider: JwtProvider
 ) : WebSecurityConfigurerAdapter() {
 
@@ -37,7 +32,7 @@ class SecurityConfig(
 
     override fun configure(web: WebSecurity) {
         web.ignoring()
-            .antMatchers("/resources/**")
+            .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
     }
 
     override fun configure(http: HttpSecurity) {
@@ -46,8 +41,8 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .accessDeniedHandler(accessDeniedHandler)
+            .authenticationEntryPoint(authenticationEntryPointImpl)
+            .accessDeniedHandler(accessDeniedHandlerImpl)
             .and().authorizeRequests()
             .antMatchers("/", "/login", "/signup", "/user/**", "/js/**", "/css/**", "/app/**", "/forgot-password",
                 "/user/mail-auth", "/update-password/**", "/api/v1/authenticate", "/authenticate", "/api/v1/user", "/index")
@@ -57,7 +52,6 @@ class SecurityConfig(
             .and()
             .formLogin()
             .loginPage("/login")
-            .loginProcessingUrl("/loginProc")
             .and()
             .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
             .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter::class.java)
@@ -67,8 +61,8 @@ class SecurityConfig(
     fun authenticationFilter(): CustomAuthenticationFilter {
         val customAuthenticationFilter = CustomAuthenticationFilter(authenticationManager())
         customAuthenticationFilter.setFilterProcessesUrl("/loginProc")
-        customAuthenticationFilter.setAuthenticationSuccessHandler(authSuccessHandler)
-        customAuthenticationFilter.setAuthenticationFailureHandler(authFailureHandler)
+        customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler)
+        customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler)
         customAuthenticationFilter.afterPropertiesSet()
 
         return customAuthenticationFilter

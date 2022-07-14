@@ -1,6 +1,5 @@
 package com.example.kotlinspringbootboard.service
 
-import com.example.kotlinspringbootboard.dto.UserDto
 import com.example.kotlinspringbootboard.entity.User
 import com.example.kotlinspringbootboard.repository.UserRepository
 

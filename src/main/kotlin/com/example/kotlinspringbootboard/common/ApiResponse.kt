@@ -1,4 +1,4 @@
-package com.example.kotlinspringbootboard.response
+package com.example.kotlinspringbootboard.common
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.MediaType

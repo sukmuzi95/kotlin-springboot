@@ -91,9 +91,24 @@
                     console.log(response)
                     // $.cookie('token', result['result'], {path: '/index'})
                     localStorage.setItem('token', response.result)
-                    //window.location.replace("/index")
-                    //$.notify('회원 가입이 완료되었습니다.')
-                    //location.href = '/index'
+                    let token = localStorage.getItem('token')
+
+                    // let httpRequest = new XMLHttpRequest()
+                    // httpRequest.open('get', '/index', true)
+                    // httpRequest.setRequestHeader('Authorization', 'Bearer ' + token)
+                    // httpRequest.send()
+
+                    $.ajax({
+                        type: 'get',
+                        url: '/index',
+                        headers: {
+                            'Authorization' : 'Bearer ' + token
+                        }
+                    }).done(function() {
+                        alert('done')
+                    })
+
+                    // location.href = '/index'
                 } else {
                     $.notify('이메일 또는 비밀번호를 확인해주세요.')
                 }

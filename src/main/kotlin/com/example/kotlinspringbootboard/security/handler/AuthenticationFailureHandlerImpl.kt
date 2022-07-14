@@ -1,7 +1,7 @@
-package com.example.kotlinspringbootboard.handler
+package com.example.kotlinspringbootboard.security.handler
 
-import com.example.kotlinspringbootboard.response.ApiResponse
-import com.example.kotlinspringbootboard.response.ApiResponseType
+import com.example.kotlinspringbootboard.common.ApiResponse
+import com.example.kotlinspringbootboard.common.ApiResponseType
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.stereotype.Component
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AuthFailureHandler : AuthenticationFailureHandler {
+class AuthenticationFailureHandlerImpl : AuthenticationFailureHandler {
 
     override fun onAuthenticationFailure(
         request: HttpServletRequest,

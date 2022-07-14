@@ -1,7 +1,7 @@
-package com.example.kotlinspringbootboard.jwt
+package com.example.kotlinspringbootboard.security.handler
 
-import com.example.kotlinspringbootboard.response.ApiResponse
-import com.example.kotlinspringbootboard.response.ApiResponseType
+import com.example.kotlinspringbootboard.common.ApiResponse
+import com.example.kotlinspringbootboard.common.ApiResponseType
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
+class AuthenticationEntryPointImpl : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,

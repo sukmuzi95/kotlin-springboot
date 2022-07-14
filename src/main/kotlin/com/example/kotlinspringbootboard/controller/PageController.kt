@@ -30,7 +30,11 @@ class PageController {
 
     @GetMapping("/index")
     fun index(authentication: Authentication?): String {
-        return if (authentication?.isAuthenticated == false || authentication == null) {
+        println(authentication?.name)
+        println(authentication?.credentials)
+        println(authentication?.authorities)
+        println(authentication?.isAuthenticated)
+        return if (authentication == null) {
             "redirect:/login"
         } else {
             "index"

@@ -1,6 +1,5 @@
-package com.example.kotlinspringbootboard.filter
+package com.example.kotlinspringbootboard.jwt
 
-import com.example.kotlinspringbootboard.jwt.JwtProvider
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
@@ -21,7 +20,7 @@ class JwtFilter(private val jwtProvider: JwtProvider) : OncePerRequestFilter() {
     ) {
         println("JwtFilter")
 
-        val jwt = resolveToken(request)
+        val jwt = jwtProvider.resolveToken(request)
         println("jwt : $jwt")
 
         if (StringUtils.hasText(jwt) && jwtProvider.isValidToken(jwt)) {
@@ -33,15 +32,5 @@ class JwtFilter(private val jwtProvider: JwtProvider) : OncePerRequestFilter() {
         }
 
         filterChain.doFilter(request, response)
-    }
-
-    private fun resolveToken(request: HttpServletRequest): String {
-        val bearerToken = request.getHeader(AUTHORIZATION_HEADER)
-
-        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            bearerToken.substring(7)
-        } else {
-            ""
-        }
     }
 }

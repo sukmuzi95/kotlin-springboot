@@ -1,4 +1,4 @@
-package com.example.kotlinspringbootboard.response
+package com.example.kotlinspringbootboard.common
 
 enum class ApiResponseType(var code: Int, var message: String) {
 

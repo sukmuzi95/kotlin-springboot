@@ -1,9 +1,9 @@
 package com.example.kotlinspringbootboard.controller
 
-import com.example.kotlinspringbootboard.dto.UserDto
+import com.example.kotlinspringbootboard.security.dto.UserDto
 import com.example.kotlinspringbootboard.entity.Role
 import com.example.kotlinspringbootboard.entity.User
-import com.example.kotlinspringbootboard.response.ApiResponse
+import com.example.kotlinspringbootboard.common.ApiResponse
 import com.example.kotlinspringbootboard.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

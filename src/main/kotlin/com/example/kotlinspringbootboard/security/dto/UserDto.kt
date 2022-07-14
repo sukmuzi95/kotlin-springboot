@@ -1,4 +1,4 @@
-package com.example.kotlinspringbootboard.dto
+package com.example.kotlinspringbootboard.security.dto
 
 import com.example.kotlinspringbootboard.entity.Role
 import com.example.kotlinspringbootboard.entity.User
