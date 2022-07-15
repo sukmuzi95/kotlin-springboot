@@ -19,6 +19,7 @@ class UserDetailsServiceImpl(private val userRepository: UserRepository) : UserD
             this.id = user.id
             this.email = user.email
             this.password = user.password
+            this.nickname = user.nickname
             this.role = user.role!!
         }
     }

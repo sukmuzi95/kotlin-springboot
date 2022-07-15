@@ -21,6 +21,9 @@ class JwtProvider(private val userDetailsService: UserDetailsService) {
     @Value("\${jwt.secret}")
     private lateinit var secret: String
 
+    companion object {
+        const val ACCESS_EXPIRE_TIME = 2 * 60 * 60 * 1000
+    }
     @PostConstruct
     private fun init() {
         secret = Base64.getEncoder().encodeToString(secret.toByteArray())
@@ -35,6 +38,7 @@ class JwtProvider(private val userDetailsService: UserDetailsService) {
     }
 
     fun getAuthentication(token: String): Authentication {
+        println("getAuthentication: ${this.getSubject(token)}")
         val userDetails: UserDetails = userDetailsService.loadUserByUsername(this.getSubject(token))
 
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)

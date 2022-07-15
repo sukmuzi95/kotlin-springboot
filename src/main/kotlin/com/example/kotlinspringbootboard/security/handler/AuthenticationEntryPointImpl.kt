@@ -15,7 +15,8 @@ class AuthenticationEntryPointImpl : AuthenticationEntryPoint {
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        println("JwtAuthenticationEntryPoint")
-        ApiResponse.error(response, ApiResponseType.UNAUTHORIZED_RESPONSE)
+//        println("AuthenticationEntryPointImpl")
+//        ApiResponse.error(response, ApiResponseType.UNAUTHORIZED_RESPONSE)
+        response.sendRedirect("/login")
     }
 }

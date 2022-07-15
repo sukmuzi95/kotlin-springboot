@@ -29,7 +29,6 @@ class UserController(
      *  @param userDto
      *  @return page
      */
-
     @PostMapping("/api/v1/user")
     @ResponseBody
     fun signup(@RequestBody userDto: UserDto): ResponseEntity<ApiResponse> {

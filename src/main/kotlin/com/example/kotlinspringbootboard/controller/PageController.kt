@@ -1,9 +1,13 @@
 package com.example.kotlinspringbootboard.controller
 
+import com.example.kotlinspringbootboard.jwt.JwtFilter
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.util.*
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletRequest
 
 @Controller
 class PageController {
@@ -29,14 +33,14 @@ class PageController {
     }
 
     @GetMapping("/index")
-    fun index(authentication: Authentication?): String {
-        println(authentication?.name)
-        println(authentication?.credentials)
-        println(authentication?.authorities)
-        println(authentication?.isAuthenticated)
-        return if (authentication == null) {
+    fun index(authentication: Authentication?, request: HttpServletRequest): String {
+        return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
+//            val token = Arrays.stream(request.cookies).filter {
+//                it.name == JwtFilter.AUTHORIZATION_HEADER
+//            }.findFirst().map(Cookie::getValue).orElse(null)
+
             "index"
         }
     }

@@ -31,8 +31,9 @@ class SecurityConfig(
     }
 
     override fun configure(web: WebSecurity) {
-        web.ignoring()
-            .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+//        web.ignoring()
+//            .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+//        web.ignoring().antMatchers("/resources/static/css/**")
     }
 
     override fun configure(http: HttpSecurity) {
@@ -47,11 +48,20 @@ class SecurityConfig(
             .antMatchers("/", "/login", "/signup", "/user/**", "/js/**", "/css/**", "/app/**", "/forgot-password",
                 "/user/mail-auth", "/update-password/**", "/api/v1/authenticate", "/authenticate", "/api/v1/user", "/index")
             .permitAll()
+            .antMatchers("/css/**", "/js/**", "/img/**")
+            .permitAll()
+            .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+            .permitAll()
 //            .antMatchers("**").hasAnyRole("ROLE_USER")
             .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/login")
+            .and()
+            .logout()
+            .logoutSuccessUrl("/login")
+            .invalidateHttpSession(true)
+            .deleteCookies(JwtFilter.AUTHORIZATION_HEADER)
             .and()
             .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
             .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter::class.java)
