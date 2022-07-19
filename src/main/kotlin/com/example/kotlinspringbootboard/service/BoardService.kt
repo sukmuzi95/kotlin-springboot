@@ -67,8 +67,4 @@ class BoardService(private val boardRepository: BoardRepository, private val boa
     fun delete(id: Long) {
         boardRepository.deleteById(id)
     }
-
-    fun updateReadCount(no: Long) {
-        boardRepository.updateReadCount(no)
-    }
 }

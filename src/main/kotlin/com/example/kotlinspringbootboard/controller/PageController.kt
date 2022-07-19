@@ -28,11 +28,11 @@ class PageController {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
-            "index"
+            "main"
         }
     }
 
-    @GetMapping("/index")
+    @GetMapping("/main")
     fun index(authentication: Authentication?, request: HttpServletRequest): String {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
@@ -41,7 +41,7 @@ class PageController {
 //                it.name == JwtFilter.AUTHORIZATION_HEADER
 //            }.findFirst().map(Cookie::getValue).orElse(null)
 
-            "index"
+            "main"
         }
     }
 

@@ -29,29 +29,16 @@
 <script src="/js/ckeditor/ckeditor.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // let myEditor
-        //
-        // ClassicEditor
-        //     .create(document.querySelector('#editor'), {
-        //         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'imageUpload'],
-        //         heading: {
-        //             options: [
-        //                 { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-        //                 { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-        //                 { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-        //                 { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-        //                 { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-        //                 { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-        //                 { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-        //             ]
-        //         }
-        //     })
-        //     .then(editor => {
-        //         myEditor = editor
-        //     })
-        //     .catch(error => {
-        //         console.error(error)
-        //     })
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                const toolbarElement = editor.ui.view.toolbar.element
+                toolbarElement.style.display = 'none'
+                editor.enableReadOnlyMode('editor')
+            })
+            .catch(error => {
+                console.error(error)
+            })
 
         $('#delete').on('click', function() {
             if (confirm('삭제하시겠습니까?')) {
@@ -82,15 +69,15 @@
             <!-- Page Content -->
             <div class="container-fluid" style="width: 80%">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Title" id="title" th:value="${board.boardTitle}" readonly>
+                    <input type="text" class="form-control" placeholder="Title" id="title" name="title" th:value="${board.boardTitle}" readonly>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" th:value="${board.userName}" readonly id="registerId">
+                    <input type="text" class="form-control" th:value="${board.registerId}" name="registerId" readonly id="registerId">
                 </div>
-                <textarea id="editor" th:text="${board.boardContent}" readonly class="form-control"></textarea>
+                <textarea id="editor" th:text="${board.boardContent}" name="content" class="form-control"></textarea>
                 <hr>
                 <button type="button" class="btn btn-secondary" style="width: 100px" onclick="history.back()">목록</button>
-                <div th:if="${#authentication.principal.username} == ${board.userName}">
+                <div th:if="${#authentication.principal.nickname} == ${board.registerId}">
                     <a th:href="@{'/board/edit/' + ${board.boardNo}}">
                         <button type="button" class="btn btn-success" style="width: 100px">수정</button>
                     </a>

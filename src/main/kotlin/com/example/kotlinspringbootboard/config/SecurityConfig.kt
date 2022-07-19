@@ -45,8 +45,8 @@ class SecurityConfig(
             .authenticationEntryPoint(authenticationEntryPointImpl)
             .accessDeniedHandler(accessDeniedHandlerImpl)
             .and().authorizeRequests()
-            .antMatchers("/", "/login", "/signup", "/user/**", "/js/**", "/css/**", "/app/**", "/forgot-password",
-                "/user/mail-auth", "/update-password/**", "/api/v1/authenticate", "/authenticate", "/api/v1/user", "/index")
+            .antMatchers("/login", "/signup", "/user/**", "/js/**", "/css/**", "/app/**", "/forgot-password",
+                "/user/mail-auth", "/update-password/**", "/api/v1/authenticate", "/authenticate", "/api/v1/user")
             .permitAll()
             .antMatchers("/css/**", "/js/**", "/img/**")
             .permitAll()

@@ -64,7 +64,7 @@
                                 <tr th:each="board : ${boardList}">
                                     <td th:text="${board.boardNo}"></td>
                                     <td><a th:href="@{'/board/' + ${board.boardNo}}" th:text="${board.boardTitle}"></a></td>
-                                    <td th:text="${board.userName}"></td>
+                                    <td th:text="${board.registerId}"></td>
                                     <td th:text="${#temporals.format(board.registerTime, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td th:text="${board.readCount}"></td>
                                 </tr>

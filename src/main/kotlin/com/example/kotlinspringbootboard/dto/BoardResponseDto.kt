@@ -8,7 +8,7 @@ class BoardResponseDto {
     var boardTitle: String? = null
     var boardContent: String? = null
     var readCount: Int? = null
-    var userName: String? = null
+    var registerId: String? = null
     var registerTime: LocalDateTime? = null
     var updateTime: LocalDateTime? = null
 }

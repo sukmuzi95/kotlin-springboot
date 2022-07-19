@@ -40,7 +40,7 @@ class UserController(
 
             ResponseEntity(response, HttpStatus.OK)
         } else {
-            var user = User().apply {
+            val user = User().apply {
                 this.email = userDto.email
                 this.password = userDto.password
                 this.nickname = userDto.nickname

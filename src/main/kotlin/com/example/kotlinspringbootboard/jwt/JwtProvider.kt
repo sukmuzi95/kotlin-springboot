@@ -17,6 +17,7 @@ import javax.xml.bind.DatatypeConverter
 class JwtProvider(private val userDetailsService: UserDetailsService) {
 
     private final val accessExpireTime = 2 * 60 * 60 * 1000L
+    private final val refreshExpireTime = 2 * 60 * 60 * 1000L
 
     @Value("\${jwt.secret}")
     private lateinit var secret: String
@@ -38,7 +39,7 @@ class JwtProvider(private val userDetailsService: UserDetailsService) {
     }
 
     fun getAuthentication(token: String): Authentication {
-        println("getAuthentication: ${this.getSubject(token)}")
+//        println("getAuthentication: ${this.getSubject(token)}")
         val userDetails: UserDetails = userDetailsService.loadUserByUsername(this.getSubject(token))
 
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)

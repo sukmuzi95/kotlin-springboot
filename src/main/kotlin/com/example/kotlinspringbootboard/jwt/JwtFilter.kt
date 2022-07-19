@@ -28,10 +28,8 @@ class JwtFilter(private val jwtProvider: JwtProvider) : OncePerRequestFilter() {
                 val jwt = Arrays.stream(request.cookies).filter {
                     it.name == AUTHORIZATION_HEADER
                 }.findFirst().map(Cookie::getValue).orElse(null)
-                println("jwt : $jwt")
 
                 if (StringUtils.hasText(jwt) && jwt.startsWith(BEARER_PREFIX)) {
-                    println("jwt 통과")
                     val authentication = jwtProvider.getAuthentication(jwt.substring(6))
                     SecurityContextHolder.getContext().authentication = authentication
                 } else {

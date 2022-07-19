@@ -40,16 +40,17 @@ class BoardController(@Autowired private val boardService: BoardService) {
     @GetMapping("/board/{no}")
     fun detail(@PathVariable("no") no: Long, model: Model): String {
         //boardService.updateReadCount(no)
-        var boardResponseDto: BoardResponseDto = boardService.findById(no)
+        val boardResponseDto: BoardResponseDto = boardService.findById(no)
         model.addAttribute("board", boardResponseDto)
 
         return "/board/detail"
     }
 
     @GetMapping("/board/edit/{no}")
-    fun edit(@PathVariable("no") no: Long, model: Model): String {
-        var boardResponseDto: BoardResponseDto = boardService.findById(no)
-        model.addAttribute("board", boardResponseDto)
+    fun edit(@PathVariable("no") no: Long, @RequestBody boardRequestDto: BoardRequestDto, model: Model): String {
+        println(boardRequestDto)
+        //val boardResponseDto: BoardResponseDto = boardService.findById(no)
+        model.addAttribute("board", boardRequestDto)
 
         return "/board/update"
     }
