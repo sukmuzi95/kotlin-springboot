@@ -27,4 +27,10 @@
         SET BOARD_TITLE = #{title}, BOARD_CONTENT = #{content, jdbcType=VARCHAR}, UPDATE_TIME = GETDATE()
         WHERE BOARD_NO = #{no}
     </update>
+
+    <update id="updateReadCount">
+        UPDATE TB_BOARD
+        SET READ_COUNT = READ_COUNT + 1
+        WHERE BOARD_NO = #{#no}
+    </update>
 </mapper>

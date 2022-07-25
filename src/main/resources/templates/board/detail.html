@@ -47,6 +47,10 @@
                 return false
             }
         })
+
+        $('#edit').on('click', function() {
+
+        })
     })
 </script>
 
@@ -76,10 +80,13 @@
                 </div>
                 <textarea id="editor" th:text="${board.boardContent}" name="content" class="form-control"></textarea>
                 <hr>
-                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="history.back()">목록</button>
+<!--                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="history.back()">목록</button>-->
+                <a href="/board">
+                    <button type="button" class="btn btn-secondary" style="width: 100px">목록</button>
+                </a>
                 <div th:if="${#authentication.principal.nickname} == ${board.registerId}">
                     <a th:href="@{'/board/edit/' + ${board.boardNo}}">
-                        <button type="button" class="btn btn-success" style="width: 100px">수정</button>
+                        <button type="button" id="edit" class="btn btn-success" style="width: 100px">수정</button>
                     </a>
                     <form id="delete-form" th:action="@{'/board/' + ${board.boardNo}}" method="post">
                         <input type="hidden" name="_method" value="delete"/>

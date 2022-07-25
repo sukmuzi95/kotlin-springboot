@@ -58,7 +58,7 @@ class BoardService(private val boardRepository: BoardRepository, private val boa
 
     @Transactional
     fun findById(no: Long): BoardResponseDto {
-        boardRepository.updateReadCount(no)
+        //boardRepository.updateReadCount(no)
 
         return boardMapper.findById(no)
     }
@@ -66,5 +66,11 @@ class BoardService(private val boardRepository: BoardRepository, private val boa
     @Transactional
     fun delete(id: Long) {
         boardRepository.deleteById(id)
+    }
+
+    @Transactional
+    fun updateReadCount(no: Long) {
+        //boardRepository.updateReadCount(no)
+        boardMapper.updateReadCount(no)
     }
 }

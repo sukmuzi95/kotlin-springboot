@@ -14,4 +14,6 @@ interface BoardMapper {
     fun findAll(): List<BoardResponseDto>
 
     fun findById(no: Long): BoardResponseDto
+
+    fun updateReadCount(no: Long): Int
 }
