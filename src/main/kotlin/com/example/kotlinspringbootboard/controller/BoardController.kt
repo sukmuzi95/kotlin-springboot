@@ -23,6 +23,7 @@ class BoardController(@Autowired private val boardService: BoardService) {
         return if (authentication?.isAuthenticated == false || authentication == null) {
             "redirect:/login"
         } else {
+            println("123")
             val boardList: List<BoardResponseDto> = boardService.findAll()
 
             model.addAttribute("boardList", boardList)
@@ -39,7 +40,6 @@ class BoardController(@Autowired private val boardService: BoardService) {
 
     @GetMapping("/board/{no}")
     fun detail(@PathVariable("no") no: Long, model: Model): String {
-        //boardService.updateReadCount(no)
         val boardResponseDto: BoardResponseDto = boardService.findById(no)
         boardService.updateReadCount(no)
 
@@ -64,7 +64,7 @@ class BoardController(@Autowired private val boardService: BoardService) {
 
     @DeleteMapping("/board/{no}")
     fun delete(@PathVariable("no") no: Long): String {
-        boardService.delete(no)
+        boardService.deleteById(no)
 
         return "redirect:/board"
     }

@@ -31,6 +31,12 @@
     <update id="updateReadCount">
         UPDATE TB_BOARD
         SET READ_COUNT = READ_COUNT + 1
-        WHERE BOARD_NO = #{#no}
+        WHERE BOARD_NO = #{no}
     </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM TB_BOARD
+        WHERE BOARD_NO = #{no}
+    </delete>
 </mapper>

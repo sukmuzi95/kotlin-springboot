@@ -22,12 +22,13 @@ class JwtFilter(private val jwtProvider: JwtProvider) : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        
-//        if (!shouldNotFilter(request)) {
-            if (request.cookies != null) {
-                val jwt = Arrays.stream(request.cookies).filter {
-                    it.name == AUTHORIZATION_HEADER
-                }.findFirst().map(Cookie::getValue).orElse(null)
+        if (request.cookies != null) {
+            val jwt = Arrays.stream(request.cookies).filter {
+                it.name == AUTHORIZATION_HEADER
+            }.findFirst().map(Cookie::getValue).orElse(null)
+
+//            if (jwtProvider.isValidToken(jwt)) {
+                //println("1")
 
                 if (StringUtils.hasText(jwt) && jwt.startsWith(BEARER_PREFIX)) {
                     val authentication = jwtProvider.getAuthentication(jwt.substring(6))
@@ -35,8 +36,19 @@ class JwtFilter(private val jwtProvider: JwtProvider) : OncePerRequestFilter() {
                 } else {
                     println("jwt 실패")
                 }
-            }
-//        }
+//            } else {
+//                val cookie = Cookie("Authorization", null)
+//                cookie.maxAge = 0
+//                response.addCookie(cookie)
+//            }
+
+//            if (StringUtils.hasText(jwt) && jwt.startsWith(BEARER_PREFIX)) {
+//                val authentication = jwtProvider.getAuthentication(jwt.substring(6))
+//                SecurityContextHolder.getContext().authentication = authentication
+//            } else {
+//                println("jwt 실패")
+//            }
+        }
 
         //val jwt = jwtProvider.resolveToken(request)
 

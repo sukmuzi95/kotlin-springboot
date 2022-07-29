@@ -80,4 +80,9 @@ class PageController {
     fun kakaoCallback(@RequestParam code: String) {
         println("code : $code")
     }
+
+    @GetMapping("/profile")
+    fun profile(): String {
+        return "/user/profile"
+    }
 }
